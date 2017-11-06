@@ -96,7 +96,7 @@ class SignUp extends React.Component {
         />
         <Button
           buttonStyle={{ marginTop: 8, height: 55 }}
-          title='Submit'
+          title='CREATE ACCOUNT'
           backgroundColor='#8e8e8e'
           onPress={this.submit}
         />

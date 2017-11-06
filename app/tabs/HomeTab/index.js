@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-import Cities from './Cities';
+import Main from './Main';
 import City from './City';
 
 const RouteConfig = {
-  Cities: {
-    screen: Cities,
+  Main: {
+    screen: Main,
   },
   City: {
     screen: City,

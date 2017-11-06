@@ -3,7 +3,7 @@ import { Text, View, Image, StyleSheet, Dimensions } from 'react-native';
 
 import { StackNavigator, TabNavigator } from 'react-navigation';
 
-import CitiesTab from './tabs/Cities/CitiesTab';
+import HomeTab from './tabs/HomeTab/index';
 import SignUp from './pages/SignUp/SignUp';
 const { width } = Dimensions.get('window');
 const TabStyleConfig = {
@@ -23,10 +23,10 @@ const TabStyleConfig = {
   },
 }
 const TabConfig = {
-  CitiesTab: {
-    screen: CitiesTab,
+  HomeTab: {
+    screen: HomeTab,
     navigationOptions: {
-      tabBarLabel: 'Cities',
+      tabBarLabel: 'Home',
       tabBarIcon: ({ tintColor }) => (
         <Image
           source={require('./assets/cityicon.png')}
@@ -68,7 +68,7 @@ const stackNav = StackNavigator({
         headerStyle: {backgroundColor: '#a3e6ce'},
         headerTitle: <Image
           resizeMode='contain'
-          style={styles.logo}
+          style={[styles.logo, {marginLeft: -30}]}
           source={require('./assets/lomboapp.png')}
         />,
       })
