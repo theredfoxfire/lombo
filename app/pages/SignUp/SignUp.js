@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, Dimensions, Image, View, Text, StyleSheet } from 'react-native';
+import { TextInput, Dimensions, Image, View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements';
 import { addCity, updateAsyncStorage } from '../../actions/citiesActions';
 import { connect } from 'react-redux';
@@ -49,6 +49,7 @@ class SignUp extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <ScrollView>
         <View style={styles.spacer} />
         <TextInput
           ref={name => this.nameRef = name}
@@ -100,6 +101,7 @@ class SignUp extends React.Component {
           backgroundColor='#8e8e8e'
           onPress={this.submit}
         />
+      </ScrollView>
       </View>
     )
   }

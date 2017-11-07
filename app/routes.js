@@ -1,9 +1,14 @@
 import React from 'react';
 import { Text, View, Image, StyleSheet, Dimensions } from 'react-native';
+import { Icon } from 'react-native-elements';
 
 import { StackNavigator, TabNavigator } from 'react-navigation';
 
 import HomeTab from './tabs/HomeTab/index';
+import LocationTab from './tabs/LocationTab/index';
+import HistoryTab from './tabs/HistoryTab/index';
+import SettingTab from './tabs/SettingTab/index';
+
 import SignUp from './pages/SignUp/SignUp';
 const { width } = Dimensions.get('window');
 const TabStyleConfig = {
@@ -13,12 +18,12 @@ const TabStyleConfig = {
     inactiveTintColor: '#666',
     showIcon: true,
     indicatorStyle: {
-      backgroundColor: '#666'
+      backgroundColor: '#52cc9d',
     },
     style: {
       backgroundColor: '#ffffff',
       borderTopWidth: 1,
-      borderTopColor: '#ededed'
+      borderTopColor: '#ededed',
     },
   },
 }
@@ -28,13 +33,57 @@ const TabConfig = {
     navigationOptions: {
       tabBarLabel: 'Home',
       tabBarIcon: ({ tintColor }) => (
-        <Image
-          source={require('./assets/cityicon.png')}
-          style={[styles.icon, {tintColor: tintColor}]}
+        <Icon
+          name='home'
+          type='font-awesome'
+          color={tintColor}
+          size={28}
         />
       )
     }
-  }
+  },
+  LocationTab: {
+    screen: LocationTab,
+    navigationOptions: {
+      tabBarLabel: 'Place',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon
+          name='map-marker'
+          type='font-awesome'
+          color={tintColor}
+          size={28}
+        />
+      )
+    }
+  },
+  HistoryTab: {
+    screen: HistoryTab,
+    navigationOptions: {
+      tabBarLabel: 'History',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon
+          name='history'
+          type='font-awesome'
+          color={tintColor}
+          size={28}
+        />
+      )
+    }
+  },
+  SettingTab: {
+    screen: SettingTab,
+    navigationOptions: {
+      tabBarLabel: 'Setting',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon
+          name='gear'
+          type='font-awesome'
+          color={tintColor}
+          size={28}
+        />
+      )
+    }
+  },
 }
 const AppHome = TabNavigator(TabConfig, TabStyleConfig);
 
