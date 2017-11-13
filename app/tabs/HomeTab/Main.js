@@ -3,6 +3,8 @@ import { AppState, AsyncStorage, Image, ScrollView, View, Text, TextInput, Dimen
 import { connect } from 'react-redux';
 import { ListItem, Button, Icon } from 'react-native-elements';
 import { updateFromStorage } from '../../actions/citiesActions';
+import AppInfo from './AppInfo';
+import AppTip from './AppTip';
 
 import { KEY } from '../../constants';
 import PropTypes from 'prop-types';
@@ -12,23 +14,22 @@ class MainTab extends React.Component {
   static contextTypes = {
     store: PropTypes.object.isRequired
   };
-  componentDidMount() {
-    const { dispatchUpdateFromStorage } = this.props;
-    AsyncStorage.getItem(KEY)
-      .then(data => {
-        console.log('data: ', JSON.parse(data));
-        if (!data) return;
-        const cities = JSON.parse(data);
-        dispatchUpdateFromStorage(cities.citiesReducer)
-      })
-      .catch(err => {
-        console.log('error in cities componentDidMount')
-        console.log('err :', err)
-      })
-  }
+  // componentDidMount() {
+  //   const { dispatchUpdateFromStorage } = this.props;
+  //   AsyncStorage.getItem(KEY)
+  //     .then(data => {
+  //       console.log('data: ', JSON.parse(data));
+  //       if (!data) return;
+  //       const cities = JSON.parse(data);
+  //       dispatchUpdateFromStorage(cities.citiesReducer)
+  //     })
+  //     .catch(err => {
+  //       console.log('error in cities componentDidMount')
+  //       console.log('err :', err)
+  //     })
+  // }
   render() {
     const { navigation } = this.props;
-    const cities = Object.values(this.props.cities);
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <ListItem
@@ -58,15 +59,17 @@ class MainTab extends React.Component {
             />
           </View>
         </View>
-        <View style={{flexDirection: 'row', height: 50, padding: 10}}>
-          <Icon
-            name='star'
-            type='font-awesome'
-            color='#eaed91'
-          />
-          <Text style={{marginLeft: 5, marginTop: 5}}>Your favorite places</Text>
-        </View>
         <ScrollView style={{padding: 10}}>
+          <AppInfo />
+          <AppTip />
+          <View style={{flexDirection: 'row', height: 50, padding: 10}}>
+            <Icon
+              name='star'
+              type='font-awesome'
+              color='#eaed91'
+            />
+            <Text style={{marginLeft: 5, marginTop: 5}}>Your favorite places</Text>
+          </View>
           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
             <View style={{justifyContent: 'center', alignItems: 'center', backgroundColor: '#f3f3f3', padding: 10, borderRadius: 10, margin: 5, height: 200, width: 200}}>
               <Image

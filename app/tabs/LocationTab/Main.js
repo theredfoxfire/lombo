@@ -12,26 +12,25 @@ class MainTab extends React.Component {
   static contextTypes = {
     store: PropTypes.object.isRequired
   };
-  componentDidMount() {
-    const { dispatchUpdateFromStorage } = this.props;
-    AsyncStorage.getItem(KEY)
-      .then(data => {
-        console.log('data: ', JSON.parse(data));
-        if (!data) return;
-        const cities = JSON.parse(data);
-        dispatchUpdateFromStorage(cities.citiesReducer)
-      })
-      .catch(err => {
-        console.log('error in cities componentDidMount')
-        console.log('err :', err)
-      })
-  }
+  // componentDidMount() {
+  //   const { dispatchUpdateFromStorage } = this.props;
+  //   AsyncStorage.getItem(KEY)
+  //     .then(data => {
+  //       console.log('data: ', JSON.parse(data));
+  //       if (!data) return;
+  //       const cities = JSON.parse(data);
+  //       dispatchUpdateFromStorage(cities.citiesReducer)
+  //     })
+  //     .catch(err => {
+  //       console.log('error in cities componentDidMount')
+  //       console.log('err :', err)
+  //     })
+  // }
   render() {
     const { navigation } = this.props;
     const cities = Object.values(this.props.cities);
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <Text>LocationTab</Text>
         <ListItem
           roundAvatar
           key='rewtyuwb'
@@ -65,43 +64,10 @@ class MainTab extends React.Component {
             type='font-awesome'
             color='#eaed91'
           />
-          <Text style={{marginLeft: 5, marginTop: 5}}>Your favorite places</Text>
+          <Text style={{marginLeft: 5, marginTop: 5}}>Shop Location</Text>
         </View>
         <ScrollView style={{padding: 10}}>
-          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-            <View style={{justifyContent: 'center', alignItems: 'center', backgroundColor: '#f3f3f3', padding: 10, borderRadius: 10, margin: 5, height: 200, width: 200}}>
-              <Image
-                source={require('../../assets/bob.png')}
-                style={{width: 170, height: 170}}
-              />
-              <Text>Bobi's supermarket</Text>
-            </View>
-            <View style={{justifyContent: 'center', alignItems: 'center', backgroundColor: '#f3f3f3', padding: 10, borderRadius: 10, margin: 5, height: 200, width: 200}}>
-              <Image
-                source={require('../../assets/papi.png')}
-                style={{width: 170, height: 170}}
-              />
-              <Text>Papi's Beaf & Meat</Text>
-            </View>
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-            <View style={{justifyContent: 'center', alignItems: 'center', backgroundColor: '#f3f3f3', padding: 10, borderRadius: 10, margin: 5, height: 200, width: 200}}>
-              <Image
-                source={require('../../assets/papi.png')}
-                style={{width: 170, height: 170}}
-              />
-              <Text>Papi's Beaf & Meat</Text>
-            </View>
-            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f3f3f3', padding: 10, borderRadius: 10, margin: 5, height: 200, width: 200}}>
-              <Icon
-                name='plus'
-                type='font-awesome'
-                color='#74ccdc'
-                size={14}
-              />
-              <Text style={{color: '#74ccdc', marginLeft: 3}}>Add more item</Text>
-            </View>
-          </View>
+
         </ScrollView>
       </View>
     )

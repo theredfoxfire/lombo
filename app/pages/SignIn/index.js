@@ -49,9 +49,9 @@ class SignIn extends React.Component {
     });
   }
   submit = () => {
-    this.setState({
-      isDisable: true,
-    });
+    // this.setState({
+    //   isDisable: true,
+    // });
     const { navigate } = this.props.navigation;
     navigate('AppHome', { name: 'Jane' });
   }
