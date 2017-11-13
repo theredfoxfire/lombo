@@ -25,28 +25,26 @@ const styles = StyleSheet.create({
 
 class SignUp extends React.Component {
   state = {
-    input: {}
-  }
+    input: {},
+    isDisable: null,
+  };
   updateInput = (key, value) => {
     this.setState({
       input: {
         ...this.state.input,
         [key]: value,
       }
-    })
+    });
   }
   submit = () => {
+    this.setState({
+      isDisable: true,
+    });
     const { navigate } = this.props.navigation;
     navigate('AppHome', { name: 'Jane' });
-    // if (!this.state.input['country'] || !this.state.input['name']) return
-    // const { dispatchAddCity } = this.props;
-    // dispatchAddCity(this.state.input)
-    // this.setState({ input: {} }, () => {
-    //   this.props.dispatchUpdateAsyncStorage();
-    // })
-    // this.nameRef.focus()
   }
   render() {
+    let {state: {isDisable}} = this;
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -96,6 +94,7 @@ class SignUp extends React.Component {
           underlineColorAndroid='transparent'
         />
         <Button
+          disabled={isDisable}
           buttonStyle={{ marginTop: 8, height: 55 }}
           title='CREATE ACCOUNT'
           backgroundColor='#8e8e8e'
