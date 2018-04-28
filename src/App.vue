@@ -14,7 +14,7 @@
           <v-list-tile-action>
             <v-icon color="teal">send</v-icon>
           </v-list-tile-action>
-          <router-link to="/">
+          <router-link to="/hello">
           <v-list-tile-content>
             <v-list-tile-title>Hello</v-list-tile-title>
           </v-list-tile-content>
@@ -44,7 +44,7 @@
        <v-toolbar-side-icon color="white--text" @click.stop="naviBar = !naviBar"></v-toolbar-side-icon>
        <v-toolbar-title class="white--text">LomboApp</v-toolbar-title>
        <v-spacer></v-spacer>
-       <v-btn icon><v-icon color="white">apps</v-icon></v-btn>
+       <v-btn icon><v-icon color="white">search</v-icon></v-btn>
      </v-toolbar>
      <v-content>
       <!-- <v-container fluid fill-height> -->
@@ -55,8 +55,7 @@
       </v-container>
       <!-- </v-container> -->
      </v-content>
-     <v-card height="200px" flat>
-       <div class="headline text-xs-center pa-5">Active: {{ e1 }}</div>
+     <v-card flat>
        <v-bottom-nav absolute :value="true" :active.sync="e1" color="transparent">
          <v-btn flat color="teal" value="home">
            <span>Home</span>
