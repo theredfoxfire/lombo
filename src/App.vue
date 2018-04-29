@@ -11,26 +11,30 @@
 
         <!--  SEND -->
         <v-list-tile>
-          <v-list-tile-action>
-            <v-icon color="teal">send</v-icon>
-          </v-list-tile-action>
-          <router-link to="/hello">
           <v-list-tile-content>
-            <v-list-tile-title>Hello</v-list-tile-title>
+            <v-btn flat color="teal" @click="hello" value="hello">
+              <v-icon color="teal">send</v-icon>
+              <span class="margin--icon">Hello</span>
+            </v-btn>
           </v-list-tile-content>
-          </router-link>
         </v-list-tile>
-
-        <!--  Wallet list -->
+        <!--  ge -->
         <v-list-tile>
-          <v-list-tile-action>
-            <v-icon color="teal">credit_card</v-icon>
-          </v-list-tile-action>
-          <router-link to="/greeting">
           <v-list-tile-content>
-            <v-list-tile-title>Greeting</v-list-tile-title>
+            <v-btn flat color="teal" @click="greeting" value="greeting">
+              <v-icon color="teal">credit_card</v-icon>
+              <span class="margin--icon">Greeting</span>
+            </v-btn>
           </v-list-tile-content>
-          </router-link>
+        </v-list-tile>
+        <!--  logo -->
+        <v-list-tile>
+          <v-list-tile-content>
+            <v-btn flat color="teal" @click="logout" value="logout">
+              <v-icon color="teal">power_settings_new</v-icon>
+              <span class="margin--icon">Logout</span>
+            </v-btn>
+          </v-list-tile-content>
         </v-list-tile>
     </v-list>
    </v-navigation-drawer>
@@ -80,6 +84,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { AUTH_LOGOUT } from './store/actions/auth';
 
 export default {
   name: 'app',
@@ -98,21 +103,14 @@ export default {
   destroyed: () => {
   },
   methods: {
-    tapFooter(link) {
-      switch (link) {
-        case 'Home':
-          this.$router.push({ path: '/' });
-          break;
-        case 'About Us':
-          this.$router.push({ path: '/' });
-          break;
-        case 'Services':
-          this.$router.push({ path: '/' });
-          break;
-        default:
-          this.$router.push({ path: '/' });
-          break;
-      }
+    logout() {
+      this.$store.dispatch(AUTH_LOGOUT, { router: this.$router });
+    },
+    hello() {
+      this.$router.push({ path: '/hello' });
+    },
+    greeting() {
+      this.$router.push({ path: '/greeting' });
     },
   },
 };
@@ -126,6 +124,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.margin--icon {
+  margin-left: 10px;
 }
 .w-break {
   word-break: break-all;

@@ -5,12 +5,17 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'hello',
   data() {
     return {
       msg: 'Welcome to Your Vue.js PWA',
     };
+  },
+  computed: {
+    ...mapGetters(['isAuthenticated']),
   },
 };
 </script>

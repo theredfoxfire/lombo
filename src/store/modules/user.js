@@ -10,12 +10,9 @@ const getters = {
 };
 
 const actions = {
-  [USER_REQUEST]: ({ commit, dispatch }) => {
+  [USER_REQUEST]: ({ commit }) => {
     commit(USER_REQUEST);
     commit(USER_SUCCESS, { name: 'Jaka Juki' });
-    commit(USER_ERROR);
-    // if resp is unauthorized, logout, to
-    dispatch(AUTH_LOGOUT);
   },
 };
 

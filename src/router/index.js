@@ -8,6 +8,7 @@ import Greeting from '@/components/Greeting';
 import Login from '@/components/Login';
 
 Vue.use(Router);
+
 Vue.use(Vuetify, {
   theme: {
     primary: '#009688',
