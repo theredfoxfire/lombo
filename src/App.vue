@@ -32,8 +32,8 @@
           </v-list-tile-content>
           </router-link>
         </v-list-tile>
-      </v-list>
-     </v-navigation-drawer>
+    </v-list>
+   </v-navigation-drawer>
 
      <v-toolbar
       color="teal"
@@ -41,7 +41,7 @@
       fixed
       app
      >
-       <v-toolbar-side-icon color="white--text" @click.stop="naviBar = !naviBar"></v-toolbar-side-icon>
+       <v-toolbar-side-icon v-if="isAuthenticated" color="white--text" @click.stop="naviBar = !naviBar"></v-toolbar-side-icon>
        <v-toolbar-title class="white--text">LomboApp</v-toolbar-title>
        <v-spacer></v-spacer>
        <v-btn icon><v-icon color="white">search</v-icon></v-btn>
@@ -55,7 +55,7 @@
       </v-container>
       <!-- </v-container> -->
      </v-content>
-     <v-card flat>
+     <v-card flat v-if="isAuthenticated">
        <v-bottom-nav absolute :value="true" :active.sync="e1" color="transparent">
          <v-btn flat color="teal" value="home">
            <span>Home</span>
@@ -79,6 +79,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'app',
   data() {
@@ -87,6 +89,9 @@ export default {
       naviBar: false,
       e1: 'home',
     };
+  },
+  computed: {
+    ...mapGetters(['isAuthenticated', 'authStatus']),
   },
   mounted: () => {
   },
@@ -126,41 +131,4 @@ export default {
   word-break: break-all;
 }
 .font-color-shamrock { color: #2FCDB4; }
- /*
-a {
-  text-decoration: none;
-}
- */
- /*
-body {
-  margin: 0;
-}
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
-main {
-  text-align: center;
-  margin-top: 40px;
-}
-header {
-  margin: 0;
-  height: 56px;
-  padding: 0 16px 0 24px;
-  background-color: #35495E;
-  color: #ffffff;
-}
-header span {
-  display: block;
-  position: relative;
-  font-size: 20px;
-  line-height: 1;
-  letter-spacing: .02em;
-  font-weight: 400;
-  box-sizing: border-box;
-  padding-top: 16px;
-}
- */
 </style>

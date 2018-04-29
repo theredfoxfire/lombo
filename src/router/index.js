@@ -22,6 +22,7 @@ Vue.use(Vuetify, {
     themeVariations: ['primary', 'secondary', 'accent', 'error', 'warning', 'info', 'success'],
   },
 });
+
 export default new Router({
   routes: [
     {
