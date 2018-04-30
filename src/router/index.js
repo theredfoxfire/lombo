@@ -6,8 +6,25 @@ import Vuetify from 'vuetify';
 import Hello from '@/components/Hello';
 import Greeting from '@/components/Greeting';
 import Login from '@/components/Login';
+import store from '../store';
 
 Vue.use(Router);
+
+const ifNotAuthenticated = (to, from, next) => {
+  if (!store.getters.isAuthenticated) {
+    next();
+    return;
+  }
+  next('/hello');
+};
+
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters.isAuthenticated) {
+    next();
+    return;
+  }
+  next('/');
+};
 
 Vue.use(Vuetify, {
   theme: {
@@ -30,16 +47,19 @@ export default new Router({
       path: '/',
       name: 'Login',
       component: Login,
+      beforeEnter: ifNotAuthenticated,
     },
     {
       path: '/hello',
       name: 'Hello',
       component: Hello,
+      beforeEnter: ifAuthenticated,
     },
     {
       path: '/greeting',
       name: 'Greeting',
       component: Greeting,
+      beforeEnter: ifAuthenticated,
     },
   ],
 });

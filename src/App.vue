@@ -51,8 +51,16 @@
        <v-btn icon><v-icon color="white">search</v-icon></v-btn>
      </v-toolbar>
      <v-content>
-      <!-- <v-container fluid fill-height> -->
       <v-container fluid>
+        <div  v-if="authStatus === 'loading'">
+          <v-dialog v-model="loader" persistent fullscreen content-class="loading">
+            <v-container fill-height>
+              <v-layout row justify-center align-center>
+                <v-progress-circular indeterminate :size="70" :width="7" color="teal"></v-progress-circular>
+              </v-layout>
+            </v-container>
+          </v-dialog>
+        </div>
         <v-fade-transition mode="out-in">
           <router-view></router-view>
         </v-fade-transition>
@@ -93,6 +101,7 @@ export default {
       links: ['Home', 'About Us', 'Services'],
       naviBar: false,
       e1: 'home',
+      loader: true,
     };
   },
   computed: {
@@ -117,6 +126,9 @@ export default {
 </script>
 
 <style>
+.loading {
+  background-color: rgba(208, 204, 204, 0.39);
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

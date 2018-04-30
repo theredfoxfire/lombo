@@ -1,6 +1,9 @@
 <template>
   <v-container fluid>
     <v-layout row wrap>
+      <v-alert outline color="error" v-if="errorMessage" icon="warning" :value="true">
+        Sign In failed, please doble check your username and password.
+      </v-alert>
       <v-flex xs12 class="text-xs-center" mt-5>
         <h1>Sign In</h1>
       </v-flex>
@@ -35,7 +38,6 @@
 </template>
 
 <script>
-  // import axios from 'axios';
   import { mapGetters } from 'vuex';
   import { AUTH_REQUEST } from '../store/actions/auth';
 
@@ -54,17 +56,13 @@
       ],
     }),
     computed: {
-      ...mapGetters(['isAuthenticated']),
+      ...mapGetters(['isAuthenticated', 'authStatus', 'errorMessage']),
     },
     methods: {
       submit() {
         if (this.$refs.form.validate()) {
-          // Native form submission is not yet supported
-          // axios.post('/api/submit', {
-          //   email: this.email,
-          //   password: this.password,
-          // });
-          this.$store.dispatch(AUTH_REQUEST, { router: this.$router });
+          const payload = { router: this.$router, email: this.email, password: this.password };
+          this.$store.dispatch(AUTH_REQUEST, payload);
         }
       },
       clear() {
