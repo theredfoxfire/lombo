@@ -7,36 +7,29 @@
        app
        v-model="naviBar"
       >
-      <v-list dense class="pt-0">
-
-        <!--  SEND -->
-        <v-list-tile>
+      <v-list class="pa-1">
+        <v-list-tile avatar>
+          <v-list-tile-avatar>
+            <img src="https://randomuser.me/api/portraits/men/85.jpg" >
+          </v-list-tile-avatar>
           <v-list-tile-content>
-            <v-btn flat color="teal" @click="hello" value="hello">
-              <v-icon color="teal">send</v-icon>
-              <span class="margin--icon">Hello</span>
-            </v-btn>
+            <v-list-tile-title>Jeff Leider</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <!--  ge -->
+      </v-list>
+      <v-list class="pt-0" dense>
+        <v-divider></v-divider>
         <v-list-tile>
-          <v-list-tile-content>
-            <v-btn flat color="teal" @click="greeting" value="greeting">
-              <v-icon color="teal">credit_card</v-icon>
-              <span class="margin--icon">Greeting</span>
-            </v-btn>
-          </v-list-tile-content>
-        </v-list-tile>
-        <!--  logo -->
-        <v-list-tile>
+          <v-list-tile-action>
+            <v-icon color="teal">power_settings_new</v-icon>
+          </v-list-tile-action>
           <v-list-tile-content>
             <v-btn flat color="teal" @click="logout" value="logout">
-              <v-icon color="teal">power_settings_new</v-icon>
               <span class="margin--icon">Logout</span>
             </v-btn>
           </v-list-tile-content>
         </v-list-tile>
-    </v-list>
+      </v-list>
    </v-navigation-drawer>
 
      <v-toolbar
@@ -48,10 +41,9 @@
        <v-toolbar-side-icon v-if="isAuthenticated" color="white--text" @click.stop="naviBar = !naviBar"></v-toolbar-side-icon>
        <v-toolbar-title class="white--text">LomboApp</v-toolbar-title>
        <v-spacer></v-spacer>
-       <v-btn icon><v-icon color="white">search</v-icon></v-btn>
+       <!-- <v-btn icon><v-icon color="white">search</v-icon></v-btn> -->
      </v-toolbar>
-     <v-content>
-      <v-container fluid>
+     <v-container class="vertical--scroll">
         <div  v-if="requestStatus === 'loading'">
           <v-dialog v-model="loader" persistent fullscreen content-class="loading">
             <v-container fill-height>
@@ -64,29 +56,30 @@
         <v-fade-transition mode="out-in">
           <router-view></router-view>
         </v-fade-transition>
-      </v-container>
       <!-- </v-container> -->
-     </v-content>
-     <v-card flat v-if="isAuthenticated">
-       <v-bottom-nav absolute :value="true" :active.sync="e1" color="transparent">
-         <v-btn flat color="teal" value="home">
-           <span>Home</span>
-           <v-icon>home</v-icon>
-         </v-btn>
-         <v-btn flat color="teal" value="store">
-           <span>Store</span>
-           <v-icon>place</v-icon>
-         </v-btn>
-         <v-btn flat color="teal" value="history">
-           <span>Recent</span>
-           <v-icon>history</v-icon>
-         </v-btn>
-         <v-btn flat color="teal" value="settings">
-           <span>Settings</span>
-           <v-icon>settings</v-icon>
-         </v-btn>
-       </v-bottom-nav>
-     </v-card>
+     </v-container>
+     <v-bottom-nav
+      v-if="isAuthenticated"
+      absolute :value="true"
+      :active.sync="e1"
+      class="fixed--bottom">
+       <v-btn flat color="teal" value="home">
+         <span>Home</span>
+         <v-icon>home</v-icon>
+       </v-btn>
+       <v-btn flat color="teal" value="store">
+         <span>Store</span>
+         <v-icon>place</v-icon>
+       </v-btn>
+       <v-btn flat color="teal" value="history">
+         <span>Recent</span>
+         <v-icon>history</v-icon>
+       </v-btn>
+       <v-btn flat color="teal" value="settings">
+         <span>Settings</span>
+         <v-icon>settings</v-icon>
+       </v-btn>
+     </v-bottom-nav>
   </v-app>
 </template>
 
@@ -141,10 +134,20 @@ export default {
   margin-top: 60px;
 }
 .margin--icon {
-  margin-left: 10px;
+  margin-top: -8px;
+  margin-left: -30px;
 }
 .w-break {
   word-break: break-all;
 }
 .font-color-shamrock { color: #2FCDB4; }
+.vertical--scroll {
+  overflow-y: scroll;
+}
+.vertical--scroll {
+  margin-bottom: 54px;
+}
+.fixed--bottom {
+  position: fixed;
+}
 </style>

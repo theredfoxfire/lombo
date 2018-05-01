@@ -1,40 +1,38 @@
 <template>
-  <v-container fluid>
-    <v-layout row wrap>
-      <v-alert outline color="error" v-if="errorMessage" icon="warning" :value="true">
-        Sign In failed, please doble check your username and password.
-      </v-alert>
-      <v-flex xs12 class="text-xs-center" mt-5>
-        <h1>Sign In</h1>
-      </v-flex>
-      <v-flex xs12 sm6 offset-sm3 mt-3>
-        <v-form v-model="valid" ref="form" lazy-validation>
-          <v-text-field
-            label="E-mail"
-            v-model="email"
-            :rules="emailRules"
-            required
-          ></v-text-field>
-          <v-text-field
-            label="Enter your password"
-            v-model="password"
-            :rules="passwordRules"
-            :append-icon="e1 ? 'visibility' : 'visibility_off'"
-            :append-icon-cb="() => (e1 = !e1)"
-            :type="e1 ? 'password' : 'text'"
-          ></v-text-field>
+  <v-layout row wrap>
+    <v-alert outline color="error" v-if="errorMessage" icon="warning" :value="true">
+      Sign In failed, please doble check your username and password.
+    </v-alert>
+    <v-flex xs12 class="text-xs-center" mt-5>
+      <h1>Sign In</h1>
+    </v-flex>
+    <v-flex xs12 sm6 offset-sm3 mt-3>
+      <v-form v-model="valid" ref="form" lazy-validation>
+        <v-text-field
+          label="E-mail"
+          v-model="email"
+          :rules="emailRules"
+          required
+        ></v-text-field>
+        <v-text-field
+          label="Enter your password"
+          v-model="password"
+          :rules="passwordRules"
+          :append-icon="e1 ? 'visibility' : 'visibility_off'"
+          :append-icon-cb="() => (e1 = !e1)"
+          :type="e1 ? 'password' : 'text'"
+        ></v-text-field>
 
-          <v-btn
-            @click="submit"
-            :disabled="!valid"
-            color="teal white--text"
-          >
-            submit
-          </v-btn>
-        </v-form>
-      </v-flex>
-    </v-layout>
-  </v-container>
+        <v-btn
+          @click="submit"
+          :disabled="!valid"
+          color="teal white--text"
+        >
+          submit
+        </v-btn>
+      </v-form>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
