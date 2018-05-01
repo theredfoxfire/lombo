@@ -1,11 +1,12 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}, {{ helper().jsUcfirst(this.getProfile.name) }}</h1>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import { USER_REQUEST } from '../store/actions/user';
 
 export default {
   name: 'hello',
@@ -15,7 +16,20 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['isAuthenticated']),
+    ...mapGetters(['isAuthenticated', 'token', 'getProfile']),
+  },
+  methods: {
+    getUserData() {
+      const payload = {
+        token: this.token,
+      };
+      if (JSON.stringify(this.getProfile) === JSON.stringify({})) {
+        this.$store.dispatch(USER_REQUEST, payload);
+      }
+    },
+  },
+  mounted() {
+    this.getUserData();
   },
 };
 </script>

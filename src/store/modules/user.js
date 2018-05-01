@@ -1,6 +1,14 @@
 import Vue from 'vue';
-import { USER_REQUEST, USER_ERROR, USER_SUCCESS } from '../actions/user';
+import axios from 'axios';
+import { USER_REQUEST, USER_SUCCESS } from '../actions/user';
 import { AUTH_LOGOUT } from '../actions/auth';
+import { MAKE_REQUEST, FINISH_REQUEST, ERROR_REQUEST } from '../actions/request';
+
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+const token = document.head.querySelector('meta[name="csrf-token"]');
+if (token) {
+  axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+}
 
 const state = { status: '', profile: {} };
 
@@ -10,24 +18,29 @@ const getters = {
 };
 
 const actions = {
-  [USER_REQUEST]: ({ commit }) => {
-    commit(USER_REQUEST);
-    commit(USER_SUCCESS, { name: 'Jaka Juki' });
+  [USER_REQUEST]: ({ commit, dispatch }, payload) => {
+    dispatch(MAKE_REQUEST);
+    axios.post('http://localhost/lombo/public/api/get-details', {},
+      { headers: {
+        Authorization: `Bearer ${payload.token}`,
+      } })
+      .then(({ data }) => {
+        commit(USER_SUCCESS, data.success);
+        dispatch(FINISH_REQUEST);
+      })
+      .catch((e) => {
+        dispatch(ERROR_REQUEST, { error: e.response.data.error });
+        dispatch(FINISH_REQUEST);
+      });
   },
 };
 
+/* eslint-disable */
 const mutations = {
-  [USER_REQUEST]: () => {
-    state.status = 'loading';
-  },
-  [USER_SUCCESS]: (resp) => {
-    state.status = 'success';
+  [USER_SUCCESS]: (state, resp) => {
     Vue.set(state, 'profile', resp);
   },
-  [USER_ERROR]: () => {
-    state.status = 'error';
-  },
-  [AUTH_LOGOUT]: () => {
+  [AUTH_LOGOUT]: (state) => {
     state.profile = {};
   },
 };

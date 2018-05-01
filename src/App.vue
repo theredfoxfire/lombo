@@ -52,7 +52,7 @@
      </v-toolbar>
      <v-content>
       <v-container fluid>
-        <div  v-if="authStatus === 'loading'">
+        <div  v-if="requestStatus === 'loading'">
           <v-dialog v-model="loader" persistent fullscreen content-class="loading">
             <v-container fill-height>
               <v-layout row justify-center align-center>
@@ -105,7 +105,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'authStatus']),
+    ...mapGetters(['isAuthenticated', 'requestStatus']),
   },
   mounted: () => {
   },
@@ -114,12 +114,15 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch(AUTH_LOGOUT, { router: this.$router });
+      this.naviBar = false;
     },
     hello() {
       this.$router.push({ path: '/hello' });
+      this.naviBar = false;
     },
     greeting() {
       this.$router.push({ path: '/greeting' });
+      this.naviBar = false;
     },
   },
 };

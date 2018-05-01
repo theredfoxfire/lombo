@@ -1,6 +1,16 @@
 /* eslint-disable promise/param-names */
 import axios from 'axios';
-import { AUTH_REQUEST, AUTH_ERROR, AUTH_SUCCESS, AUTH_LOGOUT } from '../actions/auth';
+import {
+  AUTH_REQUEST,
+  AUTH_SUCCESS,
+  AUTH_LOGOUT,
+} from '../actions/auth';
+import {
+  MAKE_REQUEST,
+  FINISH_REQUEST,
+  ERROR_REQUEST,
+  CLEAR_REQUEST,
+} from '../actions/request';
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 const token = document.head.querySelector('meta[name="csrf-token"]');
@@ -17,35 +27,36 @@ const state = {
 
 const getters = {
   isAuthenticated: () => !!state.token,
-  authStatus: () => state.status,
   token: () => state.token,
-  errorMessage: () => state.errorMessage,
 };
 
 const actions = {
-  [AUTH_REQUEST]: ({ commit }, payload) => {
-    commit(AUTH_REQUEST);
+  [AUTH_REQUEST]: ({ commit, dispatch }, payload) => {
+    dispatch(MAKE_REQUEST);
     const dataAuth = new FormData();
     dataAuth.set('email', payload.email);
     dataAuth.set('password', payload.password);
-    /* eslint-disable */
-    axios.post(`http://localhost/lombo/public/api/login`, dataAuth,
-    {headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    }})
+
+    axios.post('http://localhost/lombo/public/api/login', dataAuth,
+      { headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      } })
       .then(({ data }) => {
         localStorage.setItem('user-token', data.success.token);
-        commit(AUTH_SUCCESS, { token:  data.success.token });
+        commit(AUTH_SUCCESS, { token: data.success.token });
+        dispatch(FINISH_REQUEST);
       })
       .then(() => {
         payload.router.push({ path: '/hello' });
       })
       .catch((e) => {
-        commit(AUTH_ERROR, e.response.data.error);
+        dispatch(FINISH_REQUEST);
+        dispatch(ERROR_REQUEST, { error: e.response.data.error });
       });
   },
   [AUTH_LOGOUT]: ({ commit }, payload) => {
     commit(AUTH_LOGOUT);
+    commit(CLEAR_REQUEST);
     localStorage.removeItem('user-token');
     payload.router.push({ path: '/' });
   },
@@ -53,22 +64,13 @@ const actions = {
 
 /* eslint-disable */
 const mutations = {
-  [AUTH_REQUEST]: (state) => { state.status = 'loading'; },
   [AUTH_SUCCESS]: (state, resp) => {
-    state.status = 'success';
     state.token = resp.token;
     state.hasLoadedOnce = true;
   },
-  [AUTH_ERROR]: (state, e) => {
-    state.status = 'error';
-    state.hasLoadedOnce = true;
-    state.errorMessage = e;
-  },
   [AUTH_LOGOUT]: (state) => {
     state.token = '';
-    state.status = '';
     state.hasLoadedOnce = false;
-    state.errorMessage = '';
   },
 };
 
