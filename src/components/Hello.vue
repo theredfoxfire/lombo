@@ -6,7 +6,7 @@
       </v-list-tile-avatar>
       <v-list-tile-content class="welcome--container">
         <v-list-tile-title>Welcome Jeff!</v-list-tile-title>
-        <v-list-tile-sub-title class="subtitle">Try cashless payments with us once <br>you have ballance from your change</v-list-tile-sub-title>
+        <div class="sub-desc">Try cashless payments with us once you have ballance from your change.</div>
       </v-list-tile-content>
     </v-list-tile>
     <v-container fluid grid-list-xs>
@@ -22,13 +22,13 @@
       <v-layout row wrap>
         <v-flex
           v-bind="{ [`xs6`]: true }"
-          v-for="i in 6"
+          v-for="i in 4"
           :key="i"
         >
-          <v-card>
+          <v-card class="card-menus">
             <v-card-media
-              src="https://www.jumblebee.co.uk/site/wp-content/uploads/2014/06/JB-FE-Shop_10.png"
-              height="150"
+              src="http://www.clker.com/cliparts/S/e/P/6/M/t/shop-front-icon-md.png"
+              height="170"
             >
               <v-container fill-height fluid>
                 <v-layout fill-height>
@@ -78,10 +78,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 .welcome--container {
-  height: 100px;
+  height: 120px;
 }
-.subtitle {
-  text-overflow:clip;
+.sub-desc {
+  font-size: 14px;
 }
 .divider {
   margin-top: 20px;
@@ -91,5 +91,8 @@ export default {
 }
 .background {
   background-color: rgba(0, 150, 136, 0.5);
+}
+.card-menus {
+  margin-bottom: 5px;
 }
 </style>
