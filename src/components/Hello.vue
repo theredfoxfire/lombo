@@ -5,11 +5,12 @@
         <img src="https://randomuser.me/api/portraits/men/85.jpg">
       </v-list-tile-avatar>
       <v-list-tile-content class="welcome--container">
-        <v-list-tile-title>Welcome Jeff!</v-list-tile-title>
+        <v-list-tile-title>Welcome {{ helper().jsUcfirst(this.getProfile.name) }}!</v-list-tile-title>
         <div class="sub-desc">Try cashless payments with us once you have ballance from your change.</div>
       </v-list-tile-content>
     </v-list-tile>
     <v-container fluid grid-list-xs>
+      <v-divider></v-divider>
       <v-text-field
         name="search"
         placeholder="Search..."
@@ -17,6 +18,10 @@
         append-icon="search"
         type="text"
       ></v-text-field>
+    </v-container>
+    <v-container fluid grid-list-xs class="favorite">
+      <v-icon color="yellow darken-1">grade</v-icon>&nbsp;&nbsp;&nbsp;Your favorite places
+      <v-divider></v-divider>
     </v-container>
     <v-container fluid grid-list-xs>
       <v-layout row wrap>
@@ -27,13 +32,13 @@
         >
           <v-card class="card-menus">
             <v-card-media
-              src="http://www.clker.com/cliparts/S/e/P/6/M/t/shop-front-icon-md.png"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgWfOhgfD3VVPgIZUpDZthfYsG0cwgN_heIz_yYPdp4gry4nhLlA"
               height="170"
             >
               <v-container fill-height fluid>
                 <v-layout fill-height>
                   <v-flex xs12 align-end flexbox>
-                    <span class="headline background white--text">Shop {{ i }}</span>
+                    <span class="headline background white--text">Market {{ i }}</span>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -94,5 +99,10 @@ export default {
 }
 .card-menus {
   margin-bottom: 5px;
+}
+.favorite {
+  text-align: left;
+  padding-left: 5px;
+  margin-bottom: 20px;
 }
 </style>

@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import axios from 'axios';
-import { USER_REQUEST, USER_SUCCESS } from '../actions/user';
+import { USER_REQUEST, USER_SUCCESS, USER_REGISTER } from '../actions/user';
 import { AUTH_LOGOUT } from '../actions/auth';
-import { MAKE_REQUEST, FINISH_REQUEST, ERROR_REQUEST } from '../actions/request';
+import { ERROR_REQUEST, MAKE_REQUEST, FINISH_REQUEST } from '../actions/request';
+import ENDPOINT from '../actions/endpoint';
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 const token = document.head.querySelector('meta[name="csrf-token"]');
@@ -10,26 +11,49 @@ if (token) {
   axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 }
 
-const state = { status: '', profile: {} };
+const state = { status: '', profile: {}, register: '' };
 
 const getters = {
   getProfile: () => state.profile,
+  isRegister: () => !!state.register.name,
   isProfileLoaded: () => !!state.profile.name,
 };
 
 const actions = {
   [USER_REQUEST]: ({ commit, dispatch }, payload) => {
-    dispatch(MAKE_REQUEST);
-    axios.post('http://localhost/lombo/public/api/get-details', {},
+    axios.post(`${ENDPOINT}api/get-details`, {},
       { headers: {
         Authorization: `Bearer ${payload.token}`,
       } })
       .then(({ data }) => {
         commit(USER_SUCCESS, data.success);
-        dispatch(FINISH_REQUEST);
       })
       .catch((e) => {
-        dispatch(ERROR_REQUEST, { error: e.response.data.error });
+        dispatch(ERROR_REQUEST, { error: e });
+      });
+  },
+  [USER_REGISTER]: ({ commit, dispatch }, payload) => {
+    dispatch(MAKE_REQUEST);
+    const dataUser = new FormData();
+    dataUser.set('email', payload.email);
+    dataUser.set('password', payload.password);
+    dataUser.set('c_password', payload.c_password);
+    dataUser.set('name', payload.name);
+    dataUser.set('phone', payload.phone);
+
+    axios.post(`${ENDPOINT}api/register`, dataUser,
+      { headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      } })
+      .then(({ data }) => {
+        commit(USER_REGISTER, data.success);
+        dispatch(FINISH_REQUEST);
+      })
+      .then(() => {
+        payload.router.push({ path: '/' });
+      })
+      .catch((e) => {
+        dispatch(ERROR_REQUEST, { error: e });
         dispatch(FINISH_REQUEST);
       });
   },
@@ -42,6 +66,10 @@ const mutations = {
   },
   [AUTH_LOGOUT]: (state) => {
     state.profile = {};
+    state.register = '';
+  },
+  [USER_REGISTER]: (state, payload) => {
+    state.register = payload;
   },
 };
 

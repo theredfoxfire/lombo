@@ -1,7 +1,10 @@
 <template>
-  <v-layout row wrap>
+  <v-layout row wrap style="form-container">
     <v-alert outline color="error" v-if="errorMessage" icon="warning" :value="true">
       Sign In failed, please doble check your username and password.
+    </v-alert>
+    <v-alert type="success" :value="true" v-if="isRegister">
+      Registration success! Please Sign in to countinue.
     </v-alert>
     <v-flex xs12 class="text-xs-center" mt-5>
       <h1>Sign In</h1>
@@ -21,6 +24,7 @@
           :append-icon="e1 ? 'visibility' : 'visibility_off'"
           :append-icon-cb="() => (e1 = !e1)"
           :type="e1 ? 'password' : 'text'"
+          required
         ></v-text-field>
 
         <v-btn
@@ -28,8 +32,9 @@
           :disabled="!valid"
           color="teal white--text"
         >
-          submit
+          Sign in
         </v-btn>
+        <v-btn outline @click="register" color="teal">Register</v-btn>
       </v-form>
     </v-flex>
   </v-layout>
@@ -54,7 +59,7 @@
       ],
     }),
     computed: {
-      ...mapGetters(['isAuthenticated', 'authStatus', 'errorMessage']),
+      ...mapGetters(['isAuthenticated', 'authStatus', 'errorMessage', 'isRegister']),
     },
     methods: {
       submit() {
@@ -63,8 +68,8 @@
           this.$store.dispatch(AUTH_REQUEST, payload);
         }
       },
-      clear() {
-        this.$refs.form.reset();
+      register() {
+        this.$router.push({ path: '/register' });
       },
     },
   };
@@ -72,4 +77,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.form-container {
+  margin-top: 25%;
+}
 </style>

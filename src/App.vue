@@ -13,7 +13,7 @@
             <img src="https://randomuser.me/api/portraits/men/85.jpg" >
           </v-list-tile-avatar>
           <v-list-tile-content>
-            <v-list-tile-title>Jeff Leider</v-list-tile-title>
+            <v-list-tile-title>{{ helper().jsUcfirst(this.getProfile.name) }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -98,7 +98,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'requestStatus']),
+    ...mapGetters(['isAuthenticated', 'requestStatus', 'token', 'getProfile']),
   },
   mounted: () => {
   },
@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch(AUTH_LOGOUT, { router: this.$router });
+      this.$store.dispatch(AUTH_LOGOUT, { router: this.$router, token: this.token });
       this.naviBar = false;
     },
     hello() {

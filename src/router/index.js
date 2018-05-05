@@ -6,6 +6,7 @@ import Vuetify from 'vuetify';
 import Hello from '@/components/Hello';
 import Greeting from '@/components/Greeting';
 import Login from '@/components/Login';
+import Register from '@/components/Register';
 import store from '../store';
 
 Vue.use(Router);
@@ -47,6 +48,12 @@ export default new Router({
       path: '/',
       name: 'Login',
       component: Login,
+      beforeEnter: ifNotAuthenticated,
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register,
       beforeEnter: ifNotAuthenticated,
     },
     {

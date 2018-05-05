@@ -5,6 +5,7 @@ import {
   AUTH_SUCCESS,
   AUTH_LOGOUT,
 } from '../actions/auth';
+import ENDPOINT from '../actions/endpoint';
 import {
   MAKE_REQUEST,
   FINISH_REQUEST,
@@ -37,7 +38,7 @@ const actions = {
     dataAuth.set('email', payload.email);
     dataAuth.set('password', payload.password);
 
-    axios.post('http://localhost/lombo/public/api/login', dataAuth,
+    axios.post(`${ENDPOINT}api/login`, dataAuth,
       { headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       } })
@@ -54,9 +55,21 @@ const actions = {
         dispatch(ERROR_REQUEST, { error: e.response.data.error });
       });
   },
-  [AUTH_LOGOUT]: ({ commit }, payload) => {
+  [AUTH_LOGOUT]: ({ commit, dispatch }, payload) => {
     commit(AUTH_LOGOUT);
     commit(CLEAR_REQUEST);
+    // dispatch(MAKE_REQUEST);
+    axios.post(`${ENDPOINT}api/logout`, {},
+      { headers: {
+        Authorization: `Bearer ${payload.token}`,
+      } })
+      // .then(() => {
+      //   dispatch(FINISH_REQUEST);
+      // })
+      .catch((e) => {
+        dispatch(ERROR_REQUEST, { error: e });
+        // dispatch(FINISH_REQUEST);
+      });
     localStorage.removeItem('user-token');
     payload.router.push({ path: '/' });
   },
