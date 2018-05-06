@@ -62,7 +62,7 @@
       v-if="isAuthenticated"
       absolute :value="true"
       :active.sync="e1"
-      class="fixed--bottom">
+      class="fixed-bottom">
        <v-btn flat color="teal" value="home">
          <span>Home</span>
          <v-icon>home</v-icon>
@@ -147,7 +147,7 @@ export default {
 .vertical--scroll {
   margin-bottom: 54px;
 }
-.fixed--bottom {
-  position: fixed;
+.fixed-bottom {
+  position: fixed !important;
 }
 </style>
