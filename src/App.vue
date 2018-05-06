@@ -1,5 +1,4 @@
 <template>
-  <!-- <div id="app"> -->
     <v-app>
       <v-navigation-drawer
        fixed
@@ -56,23 +55,22 @@
         <v-fade-transition mode="out-in">
           <router-view></router-view>
         </v-fade-transition>
-      <!-- </v-container> -->
      </v-container>
      <v-bottom-nav
       v-if="isAuthenticated"
       absolute :value="true"
-      :active.sync="e1"
+      :active.sync="selectedTab"
       class="fixed-bottom">
-       <v-btn flat color="teal" value="home">
+       <v-btn flat color="teal" value="hello" @click="helloAction">
          <span>Home</span>
          <v-icon>home</v-icon>
        </v-btn>
-       <v-btn flat color="teal" value="store">
+       <v-btn flat color="teal" value="places" @click="placesAction">
          <span>Store</span>
          <v-icon>place</v-icon>
        </v-btn>
-       <v-btn flat color="teal" value="history">
-         <span>Recent</span>
+       <v-btn flat color="teal" value="history" @click="historyAction">
+         <span>History</span>
          <v-icon>history</v-icon>
        </v-btn>
        <v-btn flat color="teal" value="settings">
@@ -87,13 +85,14 @@
 import { mapGetters } from 'vuex';
 import { AUTH_LOGOUT } from './store/actions/auth';
 
+const uriArr = window.location.href.split('/');
 export default {
   name: 'app',
   data() {
     return {
       links: ['Home', 'About Us', 'Services'],
       naviBar: false,
-      e1: 'home',
+      selectedTab: uriArr[uriArr.length - 1] ? uriArr[uriArr.length - 1] : 'hello',
       loader: true,
     };
   },
@@ -102,6 +101,8 @@ export default {
   },
   mounted: () => {
   },
+  beforeMount: () => {
+  },
   destroyed: () => {
   },
   methods: {
@@ -109,13 +110,14 @@ export default {
       this.$store.dispatch(AUTH_LOGOUT, { router: this.$router, token: this.token });
       this.naviBar = false;
     },
-    hello() {
+    helloAction() {
       this.$router.push({ path: '/hello' });
-      this.naviBar = false;
     },
-    greeting() {
-      this.$router.push({ path: '/greeting' });
-      this.naviBar = false;
+    placesAction() {
+      this.$router.push({ path: '/places' });
+    },
+    historyAction() {
+      this.$router.push({ path: '/history' });
     },
   },
 };
@@ -137,15 +139,9 @@ export default {
   margin-top: -8px;
   margin-left: -30px;
 }
-.w-break {
-  word-break: break-all;
-}
-.font-color-shamrock { color: #2FCDB4; }
 .vertical--scroll {
   overflow-y: scroll;
-}
-.vertical--scroll {
-  margin-bottom: 54px;
+  margin-bottom: 54px !important;
 }
 .fixed-bottom {
   position: fixed !important;

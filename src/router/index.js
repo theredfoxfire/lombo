@@ -7,6 +7,8 @@ import Hello from '@/components/Hello';
 import Greeting from '@/components/Greeting';
 import Login from '@/components/Login';
 import Register from '@/components/Register';
+import Places from '@/components/Places';
+import History from '@/components/History';
 import store from '../store';
 
 Vue.use(Router);
@@ -60,6 +62,18 @@ export default new Router({
       path: '/hello',
       name: 'Hello',
       component: Hello,
+      beforeEnter: ifAuthenticated,
+    },
+    {
+      path: '/history',
+      name: 'History',
+      component: History,
+      beforeEnter: ifAuthenticated,
+    },
+    {
+      path: '/places',
+      name: 'Places',
+      component: Places,
       beforeEnter: ifAuthenticated,
     },
     {

@@ -58,17 +58,12 @@ const actions = {
   [AUTH_LOGOUT]: ({ commit, dispatch }, payload) => {
     commit(AUTH_LOGOUT);
     commit(CLEAR_REQUEST);
-    // dispatch(MAKE_REQUEST);
     axios.post(`${ENDPOINT}api/logout`, {},
       { headers: {
         Authorization: `Bearer ${payload.token}`,
       } })
-      // .then(() => {
-      //   dispatch(FINISH_REQUEST);
-      // })
       .catch((e) => {
         dispatch(ERROR_REQUEST, { error: e });
-        // dispatch(FINISH_REQUEST);
       });
     localStorage.removeItem('user-token');
     payload.router.push({ path: '/' });

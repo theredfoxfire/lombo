@@ -26,13 +26,13 @@
     <v-container fluid grid-list-xs>
       <v-layout row wrap>
         <v-flex
-          v-bind="{ [`xs6`]: true }"
-          v-for="i in 4"
+          v-bind="{ [`xs${size}`]: true }"
+          v-for="i in 6"
           :key="i"
         >
           <v-card class="card-menus">
             <v-card-media
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgWfOhgfD3VVPgIZUpDZthfYsG0cwgN_heIz_yYPdp4gry4nhLlA"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVS-1Q7xsjtKP_oCzTX-uVq_c4WJS8U_9-FS18ta_fx7_8etjFvw"
               height="170"
             >
               <v-container fill-height fluid>
@@ -59,10 +59,17 @@ export default {
   data() {
     return {
       msg: 'Welcome to Your Vue.js PWA',
+      windowWidth: 0,
+      size: 6,
     };
   },
   computed: {
     ...mapGetters(['isAuthenticated', 'token', 'getProfile']),
+  },
+  watch: {
+    windowWidth(newWidth) {
+      this.getScreenSize(newWidth);
+    },
   },
   methods: {
     getUserData() {
@@ -73,9 +80,28 @@ export default {
         this.$store.dispatch(USER_REQUEST, payload);
       }
     },
+    getScreenSize(width) {
+      if (Number(width) >= 900) {
+        this.size = 2;
+      } else if (Number(width) < 900 && Number(width) > 500) {
+        this.size = 3;
+      } else {
+        this.size = 6;
+      }
+    },
+  },
+  beforeMount() {
+    this.getScreenSize(window.innerWidth);
   },
   mounted() {
     this.getUserData();
+    const that = this;
+    this.$nextTick(() => {
+      /* eslint-disable */
+      window.addEventListener('resize', (e) => {
+        that.windowWidth = window.innerWidth;
+      });
+    });
   },
 };
 </script>

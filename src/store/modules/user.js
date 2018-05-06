@@ -11,10 +11,10 @@ if (token) {
   axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 }
 
-const state = { status: '', profile: {}, register: '' };
+const state = { status: '', profile: localStorage.getItem('user-profile') || '{}', register: '' };
 
 const getters = {
-  getProfile: () => state.profile,
+  getProfile: () => JSON.parse(state.profile),
   isRegister: () => !!state.register.name,
   isProfileLoaded: () => !!state.profile.name,
 };
@@ -27,6 +27,7 @@ const actions = {
       } })
       .then(({ data }) => {
         commit(USER_SUCCESS, data.success);
+        localStorage.setItem('user-profile', JSON.stringify(data.success));
       })
       .catch((e) => {
         dispatch(ERROR_REQUEST, { error: e });
@@ -62,11 +63,12 @@ const actions = {
 /* eslint-disable */
 const mutations = {
   [USER_SUCCESS]: (state, resp) => {
-    Vue.set(state, 'profile', resp);
+    Vue.set(state, 'profile', JSON.stringify(resp));
   },
   [AUTH_LOGOUT]: (state) => {
-    state.profile = {};
+    state.profile = '{}';
     state.register = '';
+    localStorage.removeItem('user-profile');
   },
   [USER_REGISTER]: (state, payload) => {
     state.register = payload;
