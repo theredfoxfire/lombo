@@ -73,7 +73,7 @@
          <span>History</span>
          <v-icon>history</v-icon>
        </v-btn>
-       <v-btn flat color="teal" value="settings">
+       <v-btn flat color="teal" value="settings" @click="settingsAction">
          <span>Settings</span>
          <v-icon>settings</v-icon>
        </v-btn>
@@ -118,6 +118,9 @@ export default {
     },
     historyAction() {
       this.$router.push({ path: '/history' });
+    },
+    settingsAction() {
+      this.$router.push({ path: '/settings' });
     },
   },
 };

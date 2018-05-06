@@ -9,6 +9,7 @@ import Login from '@/components/Login';
 import Register from '@/components/Register';
 import Places from '@/components/Places';
 import History from '@/components/History';
+import Setting from '@/components/Setting';
 import store from '../store';
 
 Vue.use(Router);
@@ -68,6 +69,12 @@ export default new Router({
       path: '/history',
       name: 'History',
       component: History,
+      beforeEnter: ifAuthenticated,
+    },
+    {
+      path: '/settings',
+      name: 'Setting',
+      component: Setting,
       beforeEnter: ifAuthenticated,
     },
     {
