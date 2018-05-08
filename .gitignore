@@ -8,6 +8,7 @@ yarn-error.log*
 /test/e2e/reports
 selenium-debug.log
 config/*
+!config/index.js
 !config/*.example
 
 # Editor directories and files
